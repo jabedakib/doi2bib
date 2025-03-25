@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jabedakib.github.io/doi2bib/sitemap.xml
