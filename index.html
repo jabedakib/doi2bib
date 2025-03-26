@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOI2BibTeX - Convert DOIs to LaTeX Citations</title>
+    <!-- SEO Meta Tags -->
+    <title>DOI to BibTeX Converter | Free Academic Citation Tool</title>
+    <meta name="description" content="Instantly convert DOIs to BibTeX citations for LaTeX papers. 100% free online tool for researchers and students.">
+    <meta name="keywords" content="doi to bibtex, latex citation generator, academic reference tool, free bibliography converter">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Akib">
+    <link rel="canonical" href="https://yourusername.github.io/doi2bib" />
+    
+    <!-- Open Graph / Social Media Tags -->
+    <meta property="og:title" content="DOI to BibTeX Converter">
+    <meta property="og:description" content="Free online tool to convert DOIs to BibTeX format for academic papers.">
+    <meta property="og:url" content="https://yourusername.github.io/doi2bib">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --primary: #4361ee;
@@ -222,6 +240,30 @@
             background-color: var(--error);
         }
 
+        .seo-content {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            line-height: 1.7;
+        }
+
+        .seo-content h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .seo-content h3 {
+            margin: 20px 0 10px;
+            color: var(--primary);
+        }
+
+        .seo-content ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
         @media (max-width: 600px) {
             .button-group {
                 flex-direction: column;
@@ -234,6 +276,9 @@
                 position: static;
                 text-align: center;
                 margin-top: 10px;
+            }
+            .seo-content {
+                padding: 15px;
             }
         }
     </style>
@@ -276,6 +321,31 @@
             
             <div id="result">Your BibTeX entries will appear here...</div>
         </div>
+
+        <section class="seo-content">
+             <h3>What is a DOI?</h3>
+            <p>A DOI (Digital Object Identifier) is a permanent digital identifier for academic papers, making citations reliable even if web links change. Example: <code>10.1038/nature12373</code></p>
+            <h2>How to Convert DOI to BibTeX</h2>
+            <p>This free tool helps researchers convert <strong>DOIs (Digital Object Identifiers)</strong> to properly formatted <strong>BibTeX citations</strong> for LaTeX documents. Supported publishers include:</p>
+            <ul>
+                <li>IEEE</li>
+                <li>Springer Nature</li>
+                <li>Elsevier</li>
+                <li>ACS</li>
+                <li>APS</li>
+                <li>etc...</li>
+            </ul>
+            <h3>Why Use This DOI Converter?</h3>
+            <p>Unlike other converters, this tool uses the official CrossRef API for accurate BibTeX output with these benefits:</p>
+            <ul>
+                <li>100% Free with no usage limits</li>
+                <li>Batch processing of multiple DOIs</li>
+                <li>Clean, formatted BibTeX output</li>
+                <li>Dark mode for eye protection</li>
+                <li>Direct download as .bib file</li>
+            </ul>
+           
+        </section>
 
         <footer>
             <p>Uses <a href="https://www.crossref.org" target="_blank">CrossRef</a> API | No data is stored</p>
@@ -369,7 +439,8 @@
                 '10.1038/nature12373',          // Nature article
                 '10.1016/j.tcs.2008.12.046',    // Theoretical Computer Science
                 '10.1145/3328526.3329573',      // ACM article
-                '10.1109/5.771073'              // IEEE article
+                '10.1109/5.771073',             // IEEE article
+                '10.1371/journal.pone.0274279'  // PLOS ONE
             ];
             document.getElementById('doiInput').value = examples.join('\n');
         }
@@ -410,6 +481,7 @@
                 
                 setTimeout(() => {
                     feedback.classList.remove('show', 'error');
+                    feedback.innerHTML = '<i class="fas fa-check"></i> Copied to clipboard!';
                 }, 2000);
             }
         }
