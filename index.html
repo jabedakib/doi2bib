@@ -3,26 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SEO Meta Tags -->
     <title>DOI to BibTeX Converter | Free Academic Citation Tool</title>
     <meta name="description" content="Instantly convert DOIs to BibTeX citations for LaTeX papers. 100% free online tool for researchers and students.">
-    <meta name="keywords" content="doi to bibtex, latex citation generator, academic reference tool, free bibliography converter">
     <meta name="robots" content="index, follow">
-    <meta name="author" content="Akib">
-    <link rel="canonical" href="https://yourusername.github.io/doi2bib" />
-    
-    <!-- Open Graph / Social Media Tags -->
-    <meta property="og:title" content="DOI to BibTeX Converter">
-    <meta property="og:description" content="Free online tool to convert DOIs to BibTeX format for academic papers.">
-    <meta property="og:url" content="https://yourusername.github.io/doi2bib">
-    <meta property="og:type" content="website">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         :root {
             --primary: #4361ee;
@@ -62,8 +46,6 @@
             line-height: 1.6;
             padding: 20px;
             min-height: 100vh;
-            position: relative;
-            padding-bottom: 60px;
         }
 
         .container {
@@ -89,6 +71,24 @@
             font-size: 1rem;
         }
 
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        .dark-mode .theme-toggle:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
         .card {
             background-color: var(--card-bg);
             border-radius: 10px;
@@ -110,12 +110,6 @@
             margin-bottom: 15px;
         }
 
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
-        }
-
         .button-group {
             display: flex;
             flex-wrap: wrap;
@@ -134,26 +128,12 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.2s;
+            transition: transform 0.2s;
         }
 
         button:hover {
             background-color: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        button.secondary {
-            background-color: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        button.secondary:hover {
-            background-color: rgba(67, 97, 238, 0.1);
+            transform: translateY(-2px);
         }
 
         #result {
@@ -165,120 +145,54 @@
             border: 1px solid var(--border);
             min-height: 150px;
             overflow-x: auto;
+            margin-bottom: 20px;
         }
 
-        .success {
-            border-left: 4px solid var(--success);
+        .info-cards {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
         }
 
-        .error {
-            border-left: 4px solid var(--error);
+        .info-card {
+            flex: 1;
+            min-width: 250px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px var(--shadow);
         }
 
-        .theme-toggle {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            color: var(--text-light);
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         footer {
             text-align: center;
             margin-top: 40px;
             color: var(--text-light);
-            font-size: 0.9rem;
             position: relative;
         }
 
         .creator-tag {
-            position: absolute;
-            right: 0;
-            bottom: 0;
             font-family: 'Brush Script MT', cursive;
             color: var(--primary);
             font-size: 1.2rem;
-            opacity: 0.8;
-        }
-
-        .copy-feedback {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--primary);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px var(--shadow);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .copy-feedback.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .copy-feedback.error {
-            background-color: var(--error);
-        }
-
-        .seo-content {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background: var(--card-bg);
-            border-radius: 10px;
-            line-height: 1.7;
-        }
-
-        .seo-content h2 {
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        .seo-content h3 {
-            margin: 20px 0 10px;
-            color: var(--primary);
-        }
-
-        .seo-content ul {
-            margin: 15px 0;
-            padding-left: 20px;
         }
 
         @media (max-width: 600px) {
-            .button-group {
+            .info-cards {
                 flex-direction: column;
             }
-            button {
-                width: 100%;
-                justify-content: center;
-            }
-            .creator-tag {
-                position: static;
-                text-align: center;
-                margin-top: 10px;
-            }
-            .seo-content {
-                padding: 15px;
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
             }
         }
     </style>
@@ -291,74 +205,55 @@
                 <p class="subtitle">Convert DOIs to LaTeX bibliography entries</p>
             </div>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-                <i class="fas fa-moon"></i>
+                <i class="fas fa-moon"></i> Dark Mode
             </button>
         </header>
 
         <div class="card">
-            <label for="doiInput">
-                <p>Enter one or more DOIs (separate with new lines):</p>
-            </label>
-            <textarea id="doiInput" placeholder="Example:&#10;10.1038/nature12373&#10;10.1016/j.tcs.2008.12.046&#10;10.1145/3328526.3329573"></textarea>
+            <textarea id="doiInput" placeholder="Paste one or more DOIs (one per line)&#10;Example: 10.1038/nature12373"></textarea>
             
             <div class="button-group">
                 <button onclick="convertDOIs()" id="convertBtn">
-                    <i class="fas fa-exchange-alt"></i> Convert to BibTeX
+                    <i class="fas fa-exchange-alt"></i> Convert
                 </button>
-                <button class="secondary" onclick="insertExampleDOIs()">
-                    <i class="fas fa-lightbulb"></i> Example DOIs
-                </button>
-                <button class="secondary" onclick="resetForm()">
-                    <i class="fas fa-redo"></i> Reset
-                </button>
-                <button class="secondary" onclick="copyToClipboard()" id="copyBtn">
+                <button onclick="copyToClipboard()">
                     <i class="far fa-copy"></i> Copy
                 </button>
-                <button class="secondary" onclick="downloadBibtex()" id="downloadBtn">
+                <button onclick="downloadBibtex()">
                     <i class="fas fa-download"></i> Download
+                </button>
+                <button onclick="resetForm()">
+                    <i class="fas fa-redo"></i> Reset
                 </button>
             </div>
             
             <div id="result">Your BibTeX entries will appear here...</div>
-        </div>
 
-        <section class="seo-content">
-             <h3>What is a DOI?</h3>
-            <p>A DOI (Digital Object Identifier) is a permanent digital identifier for academic papers, making citations reliable even if web links change. Example: <code>10.1038/nature12373</code></p>
-            <h2>How to Convert DOI to BibTeX</h2>
-            <p>This free tool helps researchers convert <strong>DOIs (Digital Object Identifiers)</strong> to properly formatted <strong>BibTeX citations</strong> for LaTeX documents. Supported publishers include:</p>
-            <ul>
-                <li>IEEE</li>
-                <li>Springer Nature</li>
-                <li>Elsevier</li>
-                <li>ACS</li>
-                <li>APS</li>
-                <li>etc...</li>
-            </ul>
-            <h3>Why Use This DOI Converter?</h3>
-            <p>Unlike other converters, this tool uses the official CrossRef API for accurate BibTeX output with these benefits:</p>
-            <ul>
-                <li>100% Free with no usage limits</li>
-                <li>Batch processing of multiple DOIs</li>
-                <li>Clean, formatted BibTeX output</li>
-                <li>Dark mode for eye protection</li>
-                <li>Direct download as .bib file</li>
-            </ul>
-           
-        </section>
+            <div class="info-cards" id="infoCards" style="display: none;">
+                <div class="info-card">
+                    <h3><i class="fas fa-fingerprint"></i> What is a DOI?</h3>
+                    <p>A Digital Object Identifier (DOI) is a permanent ID for academic papers, books, and datasets. Example: 10.1000/xyz123</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-magic"></i> How Conversion Works</h3>
+                    <p>We use CrossRef's official API to convert DOIs to perfectly formatted BibTeX citations instantly.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-star"></i> Why Our Tool</h3>
+                    <p>100% free, no limits, supports all major publishers, and works directly in your browser.</p>
+                </div>
+            </div>
+        </div>
 
         <footer>
-            <p>Uses <a href="https://www.crossref.org" target="_blank">CrossRef</a> API | No data is stored</p>
-            <div class="creator-tag">Created by Akib</div>
+            <p>Uses <a href="https://www.crossref.org" target="_blank">CrossRef</a> API | <span class="creator-tag">Created by Akib</span></p>
         </footer>
-
-        <div class="copy-feedback" id="copyFeedback">
-            <i class="fas fa-check"></i> Copied to clipboard!
-        </div>
     </div>
 
     <script>
-        // Theme toggle
+        // Dark Mode Toggle
         const themeToggle = document.getElementById('themeToggle');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         let darkMode = localStorage.getItem('darkMode') === 'true' || prefersDark;
@@ -366,10 +261,10 @@
         function updateTheme() {
             if (darkMode) {
                 document.body.classList.add('dark-mode');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
             } else {
                 document.body.classList.remove('dark-mode');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
             }
         }
 
@@ -379,111 +274,47 @@
             updateTheme();
         });
 
+        // Initialize theme
         updateTheme();
 
         // DOI Conversion
         async function convertDOIs() {
             const dois = document.getElementById('doiInput').value.split('\n');
             const resultDiv = document.getElementById('result');
-            const convertBtn = document.getElementById('convertBtn');
+            const infoCards = document.getElementById('infoCards');
             
-            resultDiv.innerHTML = 'Processing...';
-            resultDiv.className = '';
-            convertBtn.innerHTML = '<div class="loading"></div> Processing';
-            convertBtn.disabled = true;
+            resultDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             
             let allBibtex = '';
-            let hasErrors = false;
             
             for (const doi of dois) {
                 const cleanDOI = doi.trim();
                 if (!cleanDOI) continue;
                 
                 try {
-                    // Using CrossRef API - the official DOI registration agency
                     const response = await fetch(
                         `https://api.crossref.org/works/${encodeURIComponent(cleanDOI)}/transform/application/x-bibtex`,
-                        {
-                            headers: {
-                                'Accept': 'application/x-bibtex',
-                                'User-Agent': 'DOI2BibTeX/1.0 (mailto:your@email.com)'
-                            }
-                        }
+                        { headers: { 'Accept': 'application/x-bibtex' } }
                     );
                     
                     if (response.ok) {
-                        const bibtex = await response.text();
-                        allBibtex += bibtex + '\n\n';
+                        allBibtex += await response.text() + '\n\n';
                     } else {
-                        const error = await response.text();
-                        allBibtex += `% Error: Could not convert DOI ${cleanDOI}\n${error}\n\n`;
-                        hasErrors = true;
+                        allBibtex += `% Error: Could not convert ${cleanDOI}\n\n`;
                     }
-                } catch (error) {
-                    console.error("Error:", error);
-                    allBibtex += `% Connection failed for DOI: ${cleanDOI}\n\n`;
-                    hasErrors = true;
+                } catch {
+                    allBibtex += `% Error processing ${cleanDOI}\n\n`;
                 }
             }
             
             resultDiv.textContent = allBibtex.trim() || 'No valid DOIs found';
-            resultDiv.className = hasErrors ? 'error' : 'success';
-            
-            convertBtn.innerHTML = '<i class="fas fa-exchange-alt"></i> Convert to BibTeX';
-            convertBtn.disabled = false;
-            document.getElementById('downloadBtn').disabled = !allBibtex.trim();
+            infoCards.style.display = 'flex';
         }
         
-        function insertExampleDOIs() {
-            const examples = [
-                '10.1038/nature12373',          // Nature article
-                '10.1016/j.tcs.2008.12.046',    // Theoretical Computer Science
-                '10.1145/3328526.3329573',      // ACM article
-                '10.1109/5.771073',             // IEEE article
-                '10.1371/journal.pone.0274279'  // PLOS ONE
-            ];
-            document.getElementById('doiInput').value = examples.join('\n');
-        }
-        
-        function resetForm() {
-            document.getElementById('doiInput').value = '';
-            document.getElementById('result').textContent = 'Your BibTeX entries will appear here...';
-            document.getElementById('result').className = '';
-            document.getElementById('downloadBtn').disabled = true;
-        }
-        
-        async function copyToClipboard() {
+        function copyToClipboard() {
             const result = document.getElementById('result');
-            const copyBtn = document.getElementById('copyBtn');
-            const feedback = document.getElementById('copyFeedback');
-            
-            try {
-                await navigator.clipboard.writeText(result.textContent);
-                
-                // Show success feedback
-                feedback.innerHTML = '<i class="fas fa-check"></i> Copied to clipboard!';
-                feedback.classList.remove('error');
-                feedback.classList.add('show');
-                
-                // Change button icon temporarily
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied';
-                
-                // Reset after 2 seconds
-                setTimeout(() => {
-                    feedback.classList.remove('show');
-                    copyBtn.innerHTML = '<i class="far fa-copy"></i> Copy';
-                }, 2000);
-                
-            } catch (err) {
-                // Show error feedback
-                feedback.innerHTML = '<i class="fas fa-times"></i> Failed to copy';
-                feedback.classList.add('error', 'show');
-                
-                setTimeout(() => {
-                    feedback.classList.remove('show', 'error');
-                    feedback.innerHTML = '<i class="fas fa-check"></i> Copied to clipboard!';
-                }, 2000);
-            }
+            navigator.clipboard.writeText(result.textContent)
+                .then(() => alert('Copied to clipboard!'));
         }
         
         function downloadBibtex() {
@@ -491,13 +322,15 @@
             const blob = new Blob([result.textContent], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            
             a.href = url;
-            a.download = 'references.bib';
-            document.body.appendChild(a);
+            a.download = 'citations.bib';
             a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+        }
+        
+        function resetForm() {
+            document.getElementById('doiInput').value = '';
+            document.getElementById('result').textContent = 'Your BibTeX entries will appear here...';
+            document.getElementById('infoCards').style.display = 'none';
         }
     </script>
 </body>
